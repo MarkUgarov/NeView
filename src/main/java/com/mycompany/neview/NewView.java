@@ -20,7 +20,11 @@ public class NewView {
         /**
          * For Testing only!
          */
-        String[] test = new String[]{"Test", "/homes/mugarov/Dokumente/ExampleInputNeView/454AllContigs.fna"};
-        Control ctrl = new Control(frame, test);
+        if(args.length == 0){
+            args = new String[]{"Test", "/vol/ampipe/data/ExampleInputNeView/454AllContigs.fna"};
+        }
+        Control ctrl = new Control(frame, args);
+        
+        
     }
 }
