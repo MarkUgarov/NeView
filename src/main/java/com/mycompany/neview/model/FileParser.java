@@ -6,6 +6,7 @@
 package com.mycompany.neview.model;
 
 import com.mycompany.neview.model.elements.Dot;
+import com.mycompany.neview.model.elements.DotBag;
 import com.mycompany.neview.model.elements.Median;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class FileParser {
     private ArrayList<String> uncutContent;
     private ArrayList<String> cutContent;
     private final String linePrefix = ">";
-    private final ArrayList<Dot> dots;
+    private final ArrayList<Dot> baglessDots;
+    private final ArrayList<DotBag> dotBags;
     private int maxMeridianLines = 5;
     private String name;
     
@@ -41,8 +43,7 @@ public class FileParser {
     public FileParser(String path){
         this();
         this.addDataFromFile(new File(path));
-        this.createDots();
-        this.createLines();
+        this.create();
     }
     
     public FileParser(String[] nameAndPaths){
@@ -58,9 +59,7 @@ public class FileParser {
                 this.addDataFromFile(new File(path));
             }
         }
-        
-        this.createDots();
-        this.createLines();
+        this.create();
     }
     
     public FileParser(File[] files){
@@ -68,12 +67,19 @@ public class FileParser {
         for(File file:files){
             this.addDataFromFile(file);
         }
+        this.create();
+    }
+    
+    
+    private void create(){
         this.createDots();
         this.createLines();
+        this.createDotBags();
     }
     
     public FileParser(){
-        this.dots = new ArrayList<>();
+        this.baglessDots = new ArrayList<>();
+        this.dotBags = new ArrayList<>();
         this.lines = new ArrayList<>();
         this.coverageSum = 0;
         this.lengthSum = 0;
@@ -98,8 +104,8 @@ public class FileParser {
     }
     
     
-    public ArrayList<Dot> getDots(){
-        return this.dots;
+    public ArrayList<DotBag> getDots(){
+        return this.dotBags;
     }
     
     public ArrayList<Median> getLines(){
@@ -153,7 +159,7 @@ public class FileParser {
             else{
                 length = this.getValue(arr[1]);
                 coverage = this.getValue(arr[2]);
-                this.dots.add(new Dot(length, coverage, arr[0]));
+                this.baglessDots.add(new Dot(length, coverage, arr[0]));
                 this.coverageSum += coverage;
                 this.lengthSum += length;
                 if(this.maxCoverage<coverage){
@@ -166,8 +172,30 @@ public class FileParser {
         }
     }
     
+    private void createDotBags(){
+        for(Median line:this.lines){
+            this.dotBags.add(new DotBag(line.getName()+"Data"));
+        }
+        this.dotBags.add(new DotBag("Above"));
+        int medianIndex;
+        boolean found;
+        for(Dot currentDot:this.baglessDots){
+           found = false;
+           for(medianIndex = 0; medianIndex<this.lines.size()&&!found; medianIndex++){
+               if(this.lines.get(medianIndex).isUnderLine(currentDot)){
+                   this.dotBags.get(medianIndex).add(currentDot);
+                   found = true;
+               }
+           }
+           if(!found){
+               this.dotBags.get(this.lines.size()).add(currentDot);
+           }
+        }
+        System.out.println("Finished creating bags");
+    }
+    
     private void createLines(){
-        double average = this.coverageSum / this.dots.size();
+        double average = this.coverageSum / this.baglessDots.size();
         Median line;
         int factor = 1;
         boolean end = false;

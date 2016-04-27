@@ -6,6 +6,7 @@
 package com.mycompany.neview.view;
 
 import com.mycompany.neview.model.elements.Dot;
+import com.mycompany.neview.model.elements.DotBag;
 import com.mycompany.neview.model.elements.Median;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,9 +16,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -38,6 +37,14 @@ public class ListPanel extends JPanel{
         this.setBackground(Color.red);
         this.scroll = new JScrollPane();
         this.add(this.scroll);
+    }
+    
+    public void setValues(ArrayList<DotBag> dotBags, ArrayList<Median> median, boolean mix){
+        ArrayList<Dot> dots = new ArrayList<>();
+        for(DotBag db:dotBags){
+            dots.addAll(db);
+        }
+        this.setValues(dots, median);
     }
     
     public void setValues(ArrayList<Dot> dots, ArrayList<Median> lines){

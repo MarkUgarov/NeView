@@ -6,6 +6,7 @@
 package com.mycompany.neview.view;
 
 import com.mycompany.neview.model.elements.Dot;
+import com.mycompany.neview.model.elements.DotBag;
 import com.mycompany.neview.model.elements.Median;
 import java.awt.Frame;
 import java.util.ArrayList;
@@ -34,9 +35,9 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
     }
     
-    public void setValues(ArrayList<Dot> dots, ArrayList<Median> lines, String name){
-        this.graph.setValues(dots, lines, name);
-        this.list.setValues(dots, lines);
+    public void setValues(ArrayList<DotBag> dotBags, ArrayList<Median> lines, String name){
+        this.graph.setValues(dotBags, lines, name);
+        this.list.setValues(dotBags, lines, true);
         this.split.checkWidth();
     }
 }

@@ -6,6 +6,7 @@
 package com.mycompany.neview.view;
 
 import com.mycompany.neview.model.elements.Dot;
+import com.mycompany.neview.model.elements.DotBag;
 import com.mycompany.neview.model.elements.Median;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,8 +42,8 @@ public class GraphPanel extends JPanel {
     
     private JScrollPane scroll;
     private JPanel content;
-    private XYSeries dotSeries;
-    private ArrayList<XYSeries> lines;
+    private ArrayList<XYSeries> dotSeries;
+    private ArrayList<XYSeries> lineSeries;
     private XYSeriesCollection dataSet;
     private JFreeChart chart;
     private ChartPanel chartPanel;
@@ -50,37 +51,49 @@ public class GraphPanel extends JPanel {
     
     public GraphPanel(){
         super(new BorderLayout());
-        this.setBackground(Color.blue);
+        super.setBackground(Color.blue);
        
         
         this.content = new JPanel(new BorderLayout());
         this.scroll = new JScrollPane(this.content);
         
         this.add(this.scroll, BorderLayout.CENTER);
-        this.dotSeries = new XYSeries("Contig data");
-        this.lines = new ArrayList<>();
+        this.dotSeries = new ArrayList<>();
+        this.lineSeries = new ArrayList<>();
     }
     
-    public void setValues(ArrayList<Dot> dots, ArrayList<Median> lines, String name){
+    public void setValues(ArrayList<DotBag> dotBags, ArrayList<Median> lines, String name){
         
-        for(Dot d:dots){
-            this.dotSeries.add(d.getX(), d.getY());
-        }
         XYSeries ser;
+        for(DotBag db:dotBags){
+            
+            ser = new XYSeries(db.getName());
+            for(Dot d:db){
+                ser.add(d.getX(), d.getY());
+            }
+
+            this.dotSeries.add(ser);
+        }
+        
+        
         for(Median med:lines){
             ser = new XYSeries(med.getName());
             ser.add(med.getStart().getX(), med.getStart().getY());
             ser.add(med.getEnd().getX(), med.getEnd().getY());
-            this.lines.add(ser);
+            this.lineSeries.add(ser);
         }
         
         this.dataSet = new XYSeriesCollection();
         
         
-        this.dataSet.addSeries(this.dotSeries);
-        for(XYSeries line:this.lines){
+        for(XYSeries dot:this.dotSeries){
+            this.dataSet.addSeries(dot);
+        }
+        for(XYSeries line:this.lineSeries){
             this.dataSet.addSeries(line);
         }
+        
+        
         
         
         this.chart = ChartFactory.createXYLineChart(
@@ -99,10 +112,12 @@ public class GraphPanel extends JPanel {
         
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         
-        renderer.setSeriesLinesVisible(0, false);
-        renderer.setSeriesPaint(0, Color.BLACK);
-        for(int i =0; i< this.lines.size(); i++){
-            renderer.setSeriesShapesVisible(i+1, false);
+        for(int i = 0; i< this.dotSeries.size(); i++){
+            renderer.setSeriesLinesVisible(i, false);
+        }
+        
+        for(int i =this.dotSeries.size(); i< this.lineSeries.size()+this.dotSeries.size(); i++){
+            renderer.setSeriesShapesVisible(i, false);
         }
         
         renderer.setBaseToolTipGenerator(new ItemGenerator());

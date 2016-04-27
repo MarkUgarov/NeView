@@ -48,6 +48,7 @@ public class Median {
             
         }
         this.name = name;
+//        System.out.println("Created line with gradient "+(xEnd/(yEnd-averageCoverage)));
         
     }
     
@@ -73,4 +74,32 @@ public class Median {
         }
         return false;
     }
+    
+    public boolean isUnderLine(Dot dot){
+        if(dot.getY()<this.start.getY()){
+            return true;
+        }
+        double deltaX = this.getDeltaX(dot);
+        double deltaY = this.getDeltaY(dot);
+        return (deltaX >= 0 && deltaY>=0);
+    }
+    
+    private double getDeltaX(Dot dot){
+        double yStart = this.getStart().getY();
+        double yEnd = this.getEnd().getY();
+        double comparisonHigh = dot.getY();
+        double comparisonWidth = comparisonHigh - yStart;
+        return dot.getX() - comparisonWidth;
+        
+       
+    }
+    
+    private double getDeltaY(Dot dot){
+        double yStart = this.getStart().getY();
+        double yEnd = this.getEnd().getY();
+        double comparisonWidth = dot.getX();
+        double comparisonHigh = comparisonWidth + yStart;
+        return comparisonHigh - dot.getY();
+    }
+    
 }
