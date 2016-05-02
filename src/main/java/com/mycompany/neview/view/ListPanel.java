@@ -54,8 +54,8 @@ public class ListPanel extends JPanel{
             int i = 0;
             
             for(Dot dot: dots){
-                this.values[i][0] = dot.getX();
-                this.values[i][1] = dot.getY();
+                this.values[i][0] = (long) dot.getX();
+                this.values[i][1] = (long) dot.getY();
 //                System.out.println("Added Dot "+values[i][0]+", "+values[i][1]);
                 i++;
             }
@@ -73,7 +73,7 @@ public class ListPanel extends JPanel{
         this.table.setEnabled(false);
         
         TableRowSorter rowSorter = new TableRowSorter(new DefaultTableModel(this.values,this.header));
-        rowSorter.setComparator(0, new DoubleComperator());
+        rowSorter.setComparator(0, new LongComparator());
         this.table.setRowSorter(rowSorter);
         
         this.scroll.setViewportView(this.table);
@@ -83,14 +83,23 @@ public class ListPanel extends JPanel{
         this.updateUI();
     }
     
-    private class DoubleComperator implements Comparator {
-            @Override
-            public int compare(Object o1, Object o2) {
-                double d1 = (double)o1;
-                double d2 = (double)o2;
-                return Double.compare(d1, d2);
-            } 
-        }
+    private class DoubleComparator implements Comparator {
+        @Override
+        public int compare(Object o1, Object o2) {
+            double d1 = (double)o1;
+            double d2 = (double)o2;
+            return Double.compare(d1, d2);
+        } 
+    }
+    
+    private class LongComparator implements Comparator{
+        @Override
+        public int compare(Object o1, Object o2) {
+            long d1 = (long)o1;
+            long d2 = (long)o2;
+            return Long.compare(d1, d2);
+        } 
+    }
     
     @Override
     public void paintComponent(Graphics g){

@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -47,12 +48,14 @@ public class GraphPanel extends JPanel {
     private XYSeriesCollection dataSet;
     private JFreeChart chart;
     private ChartPanel chartPanel;
+    private ColorGenerator colorGen;
     
     
     public GraphPanel(){
         super(new BorderLayout());
         super.setBackground(Color.blue);
        
+        this.colorGen = new ColorGenerator();
         
         this.content = new JPanel(new BorderLayout());
         this.scroll = new JScrollPane(this.content);
@@ -69,7 +72,9 @@ public class GraphPanel extends JPanel {
             
             ser = new XYSeries(db.getName());
             for(Dot d:db){
-                ser.add(d.getX(), d.getY());
+
+                ser.add(d.getLogX(), d.getLogY());
+//                System.out.println("New dot:"+d.getLogX()+", "+d.getLogY());
             }
 
             this.dotSeries.add(ser);
@@ -78,8 +83,10 @@ public class GraphPanel extends JPanel {
         
         for(Median med:lines){
             ser = new XYSeries(med.getName());
+
             ser.add(med.getStart().getX(), med.getStart().getY());
             ser.add(med.getEnd().getX(), med.getEnd().getY());
+//            System.out.println("New line from " + med.getStart().getX()+","+ med.getStart().getY()+" to "+med.getEnd().getX()+","+ med.getEnd().getY());
             this.lineSeries.add(ser);
         }
         
@@ -92,10 +99,7 @@ public class GraphPanel extends JPanel {
         for(XYSeries line:this.lineSeries){
             this.dataSet.addSeries(line);
         }
-        
-        
-        
-        
+
         this.chart = ChartFactory.createXYLineChart(
                 name,
                 "Length",
@@ -114,14 +118,16 @@ public class GraphPanel extends JPanel {
         
         for(int i = 0; i< this.dotSeries.size(); i++){
             renderer.setSeriesLinesVisible(i, false);
+            renderer.setSeriesPaint(i, this.colorGen.get(i));
         }
         
         for(int i =this.dotSeries.size(); i< this.lineSeries.size()+this.dotSeries.size(); i++){
             renderer.setSeriesShapesVisible(i, false);
+//             renderer.setSeriesPaint(i, Color.black);
+            renderer.setSeriesPaint(i, this.colorGen.get(i-this.dotSeries.size()));
         }
         
         renderer.setBaseToolTipGenerator(new ItemGenerator());
-//        renderer.setSeriesToolTipGenerator(0, new ItemGenerator());
         
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
@@ -130,11 +136,6 @@ public class GraphPanel extends JPanel {
         plot.setRangeGridlinePaint(Color.MAGENTA);
 
         
-//        XYDotRenderer dotRenderer = new XYDotRenderer(); 
-//        dotRenderer.setDotWidth(3); 
-//        dotRenderer.setDotHeight(3); 
-//        dotRenderer.setSeriesPaint(0, Color.blue);
-//        this.chart.getXYPlot().setRenderer(dotRenderer); 
 
         boolean add = (this.chartPanel == null);
         this.chartPanel = new ChartPanel(chart);
@@ -166,17 +167,19 @@ public class GraphPanel extends JPanel {
            String coorY = null;   
 
            //Number value = dataset.getValue(series, category);
-           Number value = (int)dataset.getXValue(series, category);
-           Number value1 = (int)dataset.getYValue(series, category);
+           Number value = (long)dataset.getXValue(series, category);
+           Number value1 = (long)dataset.getYValue(series, category);
            String name = dataset.getSeriesKey(series).toString();
 
            if (value != null && value1!=null) {          
               coorX  = value.toString();       
               coorY = value1.toString();      
            }
-           return name+", Length: "+coorX +", Coverage:"+coorY;
+           return "\t"+name+", Length: "+coorX +", Coverage:"+coorY;
         }
 
     }
+    
+ 
     
 }

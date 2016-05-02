@@ -12,10 +12,13 @@ package com.mycompany.neview.model.elements;
 public class Dot {
     
     private final Coordinates coordinates;
+    private final Coordinates logCoordinates;
     private final String name;
     
     private Dot(Coordinates location, String name){
         this.coordinates = location;
+        int base = 2;
+        this.logCoordinates = new Coordinates(this.log(base, this.coordinates.getX()), this.log(base, this.coordinates.getY()));
         this.name = name;
     }
     
@@ -29,12 +32,24 @@ public class Dot {
         this(new Coordinates(x,y), name);
     }
     
+    private double log(int base, double value){
+        return Math.log(value)/Math.log(base);
+    }
+    
     public double getX(){
         return this.coordinates.getX();
     }
     
     public double getY(){
         return this.coordinates.getY();
+    }
+    
+    public double getLogX(){
+        return this.logCoordinates.getX();
+    }
+    
+    public double getLogY(){
+        return this.logCoordinates.getY();
     }
     
 }

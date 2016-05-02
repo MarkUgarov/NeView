@@ -28,7 +28,9 @@ public class FileParser {
     private ArrayList<String> cutContent;
     private final String linePrefix = ">";
     private final ArrayList<Dot> baglessDots;
+    private final ArrayList<Dot> bagedDots;
     private final ArrayList<DotBag> dotBags;
+    private int dotNumber;
     private int maxMeridianLines = 5;
     private String name;
     
@@ -79,7 +81,9 @@ public class FileParser {
     
     public FileParser(){
         this.baglessDots = new ArrayList<>();
+        this.bagedDots = new ArrayList<>();
         this.dotBags = new ArrayList<>();
+        this.dotNumber = 0 ;
         this.lines = new ArrayList<>();
         this.coverageSum = 0;
         this.lengthSum = 0;
@@ -151,6 +155,9 @@ public class FileParser {
         String[] arr;
         double length;
         double coverage;
+        double logCoverage;
+        double logLength;
+        Dot dot;
         for(String str:this.cutContent){
             arr = str.split("\\s+");
             if(arr.length<2){
@@ -159,14 +166,18 @@ public class FileParser {
             else{
                 length = this.getValue(arr[1]);
                 coverage = this.getValue(arr[2]);
-                this.baglessDots.add(new Dot(length, coverage, arr[0]));
-                this.coverageSum += coverage;
-                this.lengthSum += length;
-                if(this.maxCoverage<coverage){
-                    this.maxCoverage = coverage;
+                dot = new Dot(length, coverage, arr[0]);
+                this.dotNumber++;
+                logLength = dot.getLogX();
+                logCoverage = dot.getLogY();
+                this.baglessDots.add(dot);
+                this.coverageSum += logCoverage;
+                this.lengthSum += logLength;
+                if(this.maxCoverage<logCoverage){
+                    this.maxCoverage = logCoverage;
                 }
-                if(this.maxLength < length){
-                    this.maxLength = length;
+                if(this.maxLength < logLength){
+                    this.maxLength = logLength;
                 }
             }
         }
@@ -184,26 +195,32 @@ public class FileParser {
            for(medianIndex = 0; medianIndex<this.lines.size()&&!found; medianIndex++){
                if(this.lines.get(medianIndex).isUnderLine(currentDot)){
                    this.dotBags.get(medianIndex).add(currentDot);
+
                    found = true;
                }
            }
            if(!found){
                this.dotBags.get(this.lines.size()).add(currentDot);
            }
+           this.bagedDots.add(currentDot);
         }
-        System.out.println("Finished creating bags");
+//        System.out.println("Finished creating bags");
     }
     
     private void createLines(){
-        double average = this.coverageSum / this.baglessDots.size();
+        double logAverageCoverage = (this.coverageSum / this.dotNumber);
+        double logAverageLength = (this.lengthSum / this.dotNumber);
+
+        
         Median line;
         int factor = 1;
         boolean end = false;
         int meridianLines =0;
         while(!end && meridianLines<this.maxMeridianLines){
-            line = new Median(average, this.maxCoverage, this.maxLength, factor+"x", factor);
+            line = new Median(logAverageLength, logAverageCoverage, this.maxLength, this.maxCoverage, factor+"x", factor, this.getLinearRegressionFactor());
             if(line.isOutOfBounds(this.maxLength, this.maxCoverage)){
                 end = true;
+               
             }
             else{
                 this.lines.add(line);
@@ -231,6 +248,23 @@ public class FileParser {
         return this.name;
     }
     
+    private double getLinearRegressionFactor(){
+        double n = this.bagedDots.size();
+        double factorSumXiYi = 0;
+        double squareSumXi = 0;
+        double sumXi = this.lengthSum;
+        double sumYi = this.coverageSum;
+                
+        for(Dot d: this.bagedDots){
+            factorSumXiYi += d.getLogX()*d.getLogY();
+            squareSumXi += (d.getLogX()*d.getLogX());
+        }
+        
+        return ((n *factorSumXiYi) - (sumXi*sumYi)) / ((n*squareSumXi)-(sumXi*sumXi));
+        
+        
+        
+    }
     
     
 
