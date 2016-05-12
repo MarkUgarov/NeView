@@ -41,6 +41,8 @@ public class FileParser {
     private double maxCoverage;
     private double maxLength;
     
+    private final double minLength = 10000;
+    
     
     public FileParser(String path){
         this();
@@ -183,11 +185,38 @@ public class FileParser {
         }
     }
     
+    private void eliminateDwarfs(){
+        if(this.maxLength<this.minLength){
+            System.out.println("Maximum size is < "+this.minLength+". Drawing all dots.");
+            return;
+        }
+        else{
+            this.maxCoverage = 0;
+            this.coverageSum = 0;
+            Dot d;
+            int index = 0;
+            while(index<this.baglessDots.size()){
+                d = this.baglessDots.get(index);
+                if(d.getX()<this.minLength){
+                    this.baglessDots.remove(index);
+                }
+                else{
+                    if(this.maxCoverage<d.getLogY()){
+                        this.maxCoverage = d.getLogY();
+                    }
+                    this.coverageSum += d.getLogY();
+                    index++;
+                }
+            } 
+        }
+    }
+    
     private void createDotBags(){
+        DotBag above = null;
         for(Median line:this.lines){
             this.dotBags.add(new DotBag(line.getName()+"Data"));
         }
-        this.dotBags.add(new DotBag("Above"));
+       
         int medianIndex;
         boolean found;
         for(Dot currentDot:this.baglessDots){
@@ -200,7 +229,11 @@ public class FileParser {
                }
            }
            if(!found){
-               this.dotBags.get(this.lines.size()).add(currentDot);
+               if(above == null){
+                   above = new DotBag("Above");
+                   this.dotBags.add(above);
+               }
+               above.add(currentDot);
            }
            this.bagedDots.add(currentDot);
         }

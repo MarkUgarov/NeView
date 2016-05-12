@@ -8,6 +8,7 @@ package com.mycompany.neview.view;
 import com.mycompany.neview.model.elements.Dot;
 import com.mycompany.neview.model.elements.DotBag;
 import com.mycompany.neview.model.elements.Median;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -35,8 +36,10 @@ public class ListPanel extends JPanel{
     
     public ListPanel(){
         this.setBackground(Color.red);
+        this.setLayout(new BorderLayout());
         this.scroll = new JScrollPane();
-        this.add(this.scroll);
+        this.add(this.scroll, BorderLayout.CENTER);
+        
     }
     
     public void setValues(ArrayList<DotBag> dotBags, ArrayList<Median> median, boolean mix){

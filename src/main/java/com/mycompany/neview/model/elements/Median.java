@@ -17,6 +17,11 @@ public class Median {
     private double gradient;
     private double antiGradient;
     
+    private final double factor;
+    private final double averageX;
+    private final double averageY;
+    private final double factorisedY;
+    
     
 //    /**
 //     * Creates a line with gradient 1.
@@ -35,13 +40,13 @@ public class Median {
     
     public Median(double averageX, double averageY, double maxX, double maxY, String name, double factor, double gradient){
         this.name = name;
-        double factorisedY = factor*averageY;
+        this.factor = factor;
+        this.averageX = averageX;
+        this.averageY = averageY;
+        this.factorisedY = factor*averageY;
         this.gradient = gradient;
         this.antiGradient = 1/gradient;
-        System.out.println("Factor "+factor);
-        System.out.println("\tGradient: "+this.gradient);
-        System.out.println("\tAverage X: "+averageX);
-        System.out.println("\tAverage Y: "+averageY+", factorized x"+factor+"="+factorisedY);
+;
         
         double xA = averageX;
         double yA = factorisedY;
@@ -89,7 +94,7 @@ public class Median {
     
     public boolean isOutOfBounds(double maxLength, double maxCoverage){
         if(this.start.getY() > maxCoverage ||this.start.getX() > maxLength){
-            System.out.println("Median of bounds: "+this.start.getX()+">"+maxLength+" or "+this.start.getY()+">"+maxCoverage);
+//            System.out.println("Median of bounds: "+this.start.getX()+">"+maxLength+" or "+this.start.getY()+">"+maxCoverage);
             return true;
         }
 //        if(this.end.getY() > maxCoverage || this.end.getX() > maxLength){
@@ -111,6 +116,19 @@ public class Median {
     
     private double getDeltaY(Dot dot){
         return this.getYOn(dot.getLogX()-dot.getLogY());
+    }
+    
+    public double getFactor(){
+        return this.factor;
+    }
+    
+    public double getFacorisedX(){
+        return (this.getXOn(this.factorisedY)*this.factor);
+    }
+    
+    
+    public double getFactorisedY(){
+        return this.factorisedY;
     }
     
 }
