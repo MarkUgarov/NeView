@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author mugarov
  */
-public class FileParser {
+public class FileInParser {
     
     private File file;
     private ArrayList<String> uncutContent;
@@ -44,13 +44,13 @@ public class FileParser {
     private final double minLength = 10000;
     
     
-    public FileParser(String path){
+    public FileInParser(String path){
         this();
         this.addDataFromFile(new File(path));
         this.create();
     }
     
-    public FileParser(String[] nameAndPaths){
+    public FileInParser(String[] nameAndPaths){
         this();
         if(nameAndPaths.length>1){
             this.name = nameAndPaths[0];
@@ -66,7 +66,7 @@ public class FileParser {
         this.create();
     }
     
-    public FileParser(File[] files){
+    public FileInParser(File[] files){
         this();
         for(File file:files){
             this.addDataFromFile(file);
@@ -81,7 +81,7 @@ public class FileParser {
         this.createDotBags();
     }
     
-    public FileParser(){
+    public FileInParser(){
         this.baglessDots = new ArrayList<>();
         this.bagedDots = new ArrayList<>();
         this.dotBags = new ArrayList<>();
@@ -128,7 +128,7 @@ public class FileParser {
         try {
             this.uncutContent = new ArrayList<>(Files.readAllLines(this.file.toPath(), Charset.defaultCharset()));
         } catch (IOException ex) {
-            Logger.getLogger(FileParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileInParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

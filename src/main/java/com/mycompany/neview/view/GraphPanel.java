@@ -10,10 +10,7 @@ import com.mycompany.neview.model.elements.DotBag;
 import com.mycompany.neview.model.elements.Median;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -21,19 +18,13 @@ import org.jfree.chart.ChartFactory;
  import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.XYToolTipGenerator;
-import org.jfree.chart.plot.CombinedDomainXYPlot;
-import org.jfree.chart.plot.DatasetRenderingOrder;
 
  import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.SeriesRenderingOrder;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYDotRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
  import org.jfree.data.xy.XYSeries;
  import org.jfree.data.xy.XYSeriesCollection;
- import org.jfree.ui.ApplicationFrame;
- import org.jfree.ui.RefineryUtilities;
 
 /**
  *
@@ -41,14 +32,14 @@ import org.jfree.data.xy.XYDataset;
  */
 public class GraphPanel extends JPanel {
     
-    private JScrollPane scroll;
-    private JPanel content;
-    private ArrayList<XYSeries> dotSeries;
-    private ArrayList<XYSeries> lineSeries;
+    private final JScrollPane scroll;
+    private final JPanel content;
+    private final ArrayList<XYSeries> dotSeries;
+    private final ArrayList<XYSeries> lineSeries;
     private XYSeriesCollection dataSet;
     private JFreeChart chart;
     private ChartPanel chartPanel;
-    private ColorGenerator colorGen;
+    private final ColorGenerator colorGen;
     
     
     public GraphPanel(){

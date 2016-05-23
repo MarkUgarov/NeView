@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -84,6 +85,10 @@ public class ListPanel extends JPanel{
         
         this.setBackground(Color.GREEN);
         this.updateUI();
+    }
+    
+    public TableModel getTableModel(){
+        return this.table.getModel();
     }
     
     private class DoubleComparator implements Comparator {

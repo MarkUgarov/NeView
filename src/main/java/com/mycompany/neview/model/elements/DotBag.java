@@ -6,15 +6,18 @@
 package com.mycompany.neview.model.elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
  *
  * @author mugarov
  */
-public class DotBag extends ArrayList<Dot>{
+public class DotBag extends ArrayList<Dot> {
     
     private String name;
+ 
     
     public DotBag(String name){
         super();
@@ -33,5 +36,13 @@ public class DotBag extends ArrayList<Dot>{
     public String getName(){
         return this.name;
     }
+    
+    public void sort(boolean byCoverage){
+        
+        DotSorter sorter = new DotSorter(byCoverage);
+        Collections.sort(this, sorter);
+    }
 
+    
+    
 }

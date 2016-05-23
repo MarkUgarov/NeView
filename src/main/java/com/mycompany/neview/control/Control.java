@@ -5,7 +5,7 @@
  */
 package com.mycompany.neview.control;
 
-import com.mycompany.neview.model.FileParser;
+import com.mycompany.neview.model.FileInParser;
 import com.mycompany.neview.view.MainFrame;
 
 /**
@@ -15,11 +15,12 @@ import com.mycompany.neview.view.MainFrame;
 public class Control {
     
     private final MainFrame frame;
-    private FileParser data;
+    private final FileInParser data;
     
-    public Control(MainFrame frame, String[] NameAndFilePaths){
+    public Control(MainFrame frame, String[] nameAndFilepath){
         this.frame = frame;
-        this.data = new FileParser(NameAndFilePaths);
+        this.data = new FileInParser(nameAndFilepath);
         this.frame.setValues(data.getDots(), data.getLines(), data.getName());
+        this.frame.initFileExport(new ExportControl(this.frame, this.data));
     }
 }

@@ -10,6 +10,7 @@ package com.mycompany.neview.model.elements;
  * @author mugarov
  */
 public class Dot {
+    public static final int BASE= 2;
     
     private final Coordinates coordinates;
     private final Coordinates logCoordinates;
@@ -17,7 +18,7 @@ public class Dot {
     
     private Dot(Coordinates location, String name){
         this.coordinates = location;
-        int base = 2;
+        int base = Dot.BASE;
         this.logCoordinates = new Coordinates(this.log(base, this.coordinates.getX()), this.log(base, this.coordinates.getY()));
         this.name = name;
     }

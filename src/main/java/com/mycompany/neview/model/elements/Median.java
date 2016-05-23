@@ -131,4 +131,12 @@ public class Median {
         return this.factorisedY;
     }
     
+    public double getExponentialFactorisedX(){
+        return Math.pow(Dot.BASE,this.getFacorisedX());
+    }
+    
+    public double getExponentialFactorisedY(){
+        return Math.pow(Dot.BASE, this.getFactorisedY());
+    }
+    
 }
