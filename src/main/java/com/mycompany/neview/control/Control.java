@@ -20,7 +20,7 @@ public class Control {
     public Control(MainFrame frame, String[] nameAndFilepath){
         this.frame = frame;
         this.data = new FileInParser(nameAndFilepath);
-        this.frame.setValues(data.getDots(), data.getLines(), data.getName());
+        this.frame.setValues(data.getDotBags(), data.getLines(), data.getName());
         this.frame.initFileExport(new ExportControl(this.frame, this.data));
     }
 }

@@ -38,7 +38,7 @@ public class ExportControl implements ActionListener, ItemListener{
     public static final String RADIO_EXPORT_BAG_BY_LENGTH_TEXT = "Medians (sorted by length)";
     public static final String RADIO_EXPORT_BAG_BY_LENGTH_COMMAND = "expMedLength";
    
-    public static final String RADIO_EXPORT_BAG_BY_COVERAGE_TEXT = "Medians (sorted by coverage)";
+    public static final String RADIO_EXPORT_BAG_BY_COVERAGE_TEXT = "Medians (sorted by readscount)";
     public static final String RADIO_EXPORT_BAG_BY_COVERAGE_COMMAND = "expMedCover";
     
     
@@ -115,10 +115,10 @@ public class ExportControl implements ActionListener, ItemListener{
             parser.setData(this.mainFrame.getTableModel());
         }
         else{
-            for(DotBag bag:this.data.getDots()){
+            for(DotBag bag:this.data.getDotBags()){
                 bag.sort(this.sortByCoverage);
             }   
-            parser.setData(this.data.getLines(), this.data.getDots(), this.writeMedians);
+            parser.setData(this.data.getLines(), this.data.getDotBags(), this.writeMedians);
         }
         parser.write(outputFile);
     }

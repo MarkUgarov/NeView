@@ -7,6 +7,7 @@ package com.mycompany.neview.model;
 
 import com.mycompany.neview.model.elements.DotBag;
 import com.mycompany.neview.model.elements.Median;
+import com.mycompany.neview.view.ListPanel;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -82,13 +83,6 @@ public class FileOutParser {
         
     }
     
- 
-    
-    
-    
-    
-    
-    
     
     public void setData(ArrayList<Median> medians, ArrayList<DotBag> bags, boolean writeMedians){
         this.dotBagData = new ArrayList<>();
@@ -113,12 +107,18 @@ public class FileOutParser {
         this.writeMedians = false;
         this.dotBagData = new ArrayList<>();
         String[] entries = new String[model.getRowCount()];
+        String name;
         String length;
-        String coverage;
+        String reads;
+        String scaffold;
+        String median;
         for(int i =0 ; i<model.getRowCount(); i++){
-            length = (String) model.getValueAt(i, 0);
-            coverage = (String) model.getValueAt(i,1);
-            entries[i]=this.getDotToStrong(length, coverage);
+            name = (String) model.getValueAt(i, ListPanel.POSITION_NAME);
+            length = (String) model.getValueAt(i, ListPanel.POSITION_LENGTH);
+            reads = (String) model.getValueAt(i,ListPanel.POSITION_READS);
+            scaffold = (String) model.getValueAt(i, ListPanel.POSITION_SCAFFOLD);
+            median = (String) model.getValueAt(i, ListPanel.POSITION_MEDIAN);
+            entries[i]=this.getDotToStrong(name, length, reads, scaffold, median);
         }
         this.dotBagData.add(entries);
     }
@@ -134,10 +134,10 @@ public class FileOutParser {
         String curr;
         for(int i=0; i< bag.size(); i++){
             if(this.valuesInLog){
-                curr= this.getDotToString(bag.get(i).getLogX(), bag.get(i).getLogY());
+                curr= this.getDotToString(bag.get(i).getName(), bag.get(i).getLogX(), bag.get(i).getLogY(), bag.get(i).getScaffoldName(), bag.get(i).getMedian());
             }
             else{
-                curr= this.getDotToString(bag.get(i).getX(), bag.get(i).getY());
+                curr= this.getDotToString(bag.get(i).getName(), bag.get(i).getX(), bag.get(i).getY(), bag.get(i).getScaffoldName(), bag.get(i).getMedian());
             }
             ret[i] = curr;
         }
@@ -145,20 +145,20 @@ public class FileOutParser {
        
     }
     
-    private String getDotToStrong(String length, String coverage){
-        return length+", "+ coverage;
+    private String getDotToStrong(String name, String length, String coverage, String scaffold, String median){
+        return name+": "+length+", "+ coverage+"\t"+scaffold+"\t"+median;
     }
     
-    private String getDotToString(double length, double coverage){
-        return this.getDotToStrong(""+(int)length, ""+(int)coverage);
+    private String getDotToString(String name, double length, double coverage, String scaffold, String median){
+        return this.getDotToStrong(name,""+(int)length, ""+(int)coverage, scaffold, median);
     }
     
     private String getMedianToString(Median median){
         if(this.valuesInLog){
-            return median.getName()+": Associated Length "+median.getFacorisedX()+", Coverage "+median.getFactorisedY();
+            return median.getName()+": Associated Length "+median.getFacorisedX()+", Reads "+median.getFactorisedY();
         }
         else{
-            return median.getName()+": Associated Length "+median.getExponentialFactorisedX()+", Coverage "+median.getExponentialFactorisedY();
+            return median.getName()+": Associated Length "+median.getExponentialFactorisedX()+", Reads "+median.getExponentialFactorisedY();
         }
 
     }

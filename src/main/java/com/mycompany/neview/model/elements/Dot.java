@@ -5,22 +5,27 @@
  */
 package com.mycompany.neview.model.elements;
 
+import org.jfree.data.xy.XYDataItem;
+
 /**
  *
  * @author mugarov
  */
-public class Dot {
+public class Dot{
     public static final int BASE= 2;
     
     private final Coordinates coordinates;
-    private final Coordinates logCoordinates;
     private final String name;
+    
+    private String scaffold;
+    private String median;
     
     private Dot(Coordinates location, String name){
         this.coordinates = location;
         int base = Dot.BASE;
-        this.logCoordinates = new Coordinates(this.log(base, this.coordinates.getX()), this.log(base, this.coordinates.getY()));
+       
         this.name = name;
+        this.scaffold = null;
     }
     
     /**
@@ -46,11 +51,48 @@ public class Dot {
     }
     
     public double getLogX(){
-        return this.logCoordinates.getX();
+        return this.coordinates.getLogX();
     }
     
     public double getLogY(){
-        return this.logCoordinates.getY();
+        return this.coordinates.getLogY();
+    }
+    
+    public Coordinates getCoordinates(){
+        return this.coordinates;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public void setScaffold(String name){
+        this.scaffold = name;
+    }
+    
+    public String getScaffoldName(){
+        return this.scaffold;
+    }
+    
+    public void setMedian(String name){
+        this.median = name;
+    }
+    
+    public String getMedian(){
+        return this.median;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Dot){
+            return this.name.equals(((Dot) o).getName());
+        }
+        else if(o instanceof String){
+            return this.name.equals((String)o);
+        }
+        else{
+            return super.equals(o);
+        }
     }
     
 }

@@ -60,8 +60,8 @@ public class Median {
         double xE = xA +((yM -yA)/this.gradient); // intersection of the line with maxY
         double yE = yA +((xM-xA)*this.gradient); // intersection of the line with maxX
 
-        this.start = new Coordinates(xS,yS);
-        this.end = new Coordinates(Math.min(xE, xM), Math.min(yE, yM));
+        this.start = new Coordinates(xS,yS, true);
+        this.end = new Coordinates(Math.min(xE, xM), Math.min(yE, yM), true);
     }
     
     
@@ -138,5 +138,15 @@ public class Median {
     public double getExponentialFactorisedY(){
         return Math.pow(Dot.BASE, this.getFactorisedY());
     }
+    
+    public Coordinates getStartCoordinates(){
+        return this.start;
+    }
+    
+    public Coordinates getEndCoordinates(){
+        return this.end;
+    }
+    
+ 
     
 }

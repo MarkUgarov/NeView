@@ -28,10 +28,16 @@ import javax.swing.table.TableRowSorter;
 public class ListPanel extends JPanel{
     
     private Object[][] values;
-    private final String[] header = new String[]{"Length", "Coverage"};
+    
     private final JScrollPane scroll;
     private JTable table;
 
+    private final String[] header = new String[5];
+    public static final int POSITION_NAME = 0;
+    public static final int POSITION_LENGTH = 1;
+    public static final int POSITION_READS = 2;
+    public static final int POSITION_SCAFFOLD = 3; 
+    public static final int POSITION_MEDIAN = 4;
   
 
     
@@ -40,6 +46,11 @@ public class ListPanel extends JPanel{
         this.setLayout(new BorderLayout());
         this.scroll = new JScrollPane();
         this.add(this.scroll, BorderLayout.CENTER);
+        this.header[POSITION_NAME] = "Name";
+        this.header[POSITION_LENGTH] = "Length";
+        this.header[POSITION_READS] = "Reads";
+        this.header[POSITION_SCAFFOLD] = "Scaffold";
+        this.header[POSITION_MEDIAN] = "Median";
         
     }
     
@@ -54,12 +65,15 @@ public class ListPanel extends JPanel{
     public void setValues(ArrayList<Dot> dots, ArrayList<Median> lines){
         boolean add = false;
         if(dots != null){
-            this.values = new Object[dots.size()][2];
+            this.values = new Object[dots.size()][this.header.length];
             int i = 0;
             
             for(Dot dot: dots){
-                this.values[i][0] = (long) dot.getX();
-                this.values[i][1] = (long) dot.getY();
+                this.values[i][POSITION_NAME] = (String) dot.getName();
+                this.values[i][POSITION_LENGTH] = (long) dot.getX();
+                this.values[i][POSITION_READS] = (long) dot.getY();
+                this.values[i][POSITION_SCAFFOLD] = (String) dot.getScaffoldName();
+                this.values[i][POSITION_MEDIAN] = (String) dot.getMedian();
 //                System.out.println("Added Dot "+values[i][0]+", "+values[i][1]);
                 i++;
             }
@@ -77,7 +91,8 @@ public class ListPanel extends JPanel{
         this.table.setEnabled(false);
         
         TableRowSorter rowSorter = new TableRowSorter(new DefaultTableModel(this.values,this.header));
-        rowSorter.setComparator(0, new LongComparator());
+        rowSorter.setComparator(POSITION_LENGTH, new LongComparator());
+        rowSorter.setComparator(POSITION_READS, new LongComparator());
         this.table.setRowSorter(rowSorter);
         
         this.scroll.setViewportView(this.table);

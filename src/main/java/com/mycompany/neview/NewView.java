@@ -21,7 +21,7 @@ public class NewView {
          * For Testing only!
          */
         if(args.length == 0){
-            args = new String[]{"Test", "/vol/ampipe/data/ExampleInputNeView/454AllContigs.fna"};
+            args = new String[]{"Test", "/vol/ampipe/data/ExampleInputNeView/454AllContigs.fna", "/vol/ampipe/data/ExampleInputNeView/454Scaffolds.txt"};
         }
         Control ctrl = new Control(frame, args);
         

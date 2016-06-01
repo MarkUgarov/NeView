@@ -13,6 +13,7 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 import javax.swing.table.TableModel;
 
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame {
         this.right.add(this.statistics, BorderLayout.NORTH);
         this.right.add(this.list, BorderLayout.CENTER);
         this.right.add(this.export, BorderLayout.SOUTH);
-        this.split = new SplitetPane(graph,right);
+        this.split = new SplitetPane(graph,new JScrollPane(this.right));
         this.add(split);
         this.setSize(500, 600);
         this.setExtendedState(Frame.MAXIMIZED_BOTH);

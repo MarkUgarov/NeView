@@ -27,7 +27,7 @@ public class StatisticsPanel extends JPanel{
     public void addValues(ArrayList<Median> medians){
         for(Median m:medians){
             this.add(new JLabel("Median with factor "+m.getFactor()+":"));
-            this.add(new JLabel("Coverage: "+m.getFactorisedY()));
+            this.add(new JLabel("Reads count: "+m.getFactorisedY()));
             this.add(new JLabel("Associated Length: "+m.getFacorisedX()));
         }
     }
