@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.view;
+package com.mugarov.neview.view;
 
-import com.mycompany.neview.model.elements.Median;
+import com.mugarov.neview.model.elements.Median;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -27,8 +27,9 @@ public class StatisticsPanel extends JPanel{
     public void addValues(ArrayList<Median> medians){
         for(Median m:medians){
             this.add(new JLabel("Median with factor "+m.getFactor()+":"));
-            this.add(new JLabel("Reads count: "+m.getFactorisedY()));
-            this.add(new JLabel("Associated Length: "+m.getFacorisedX()));
+            this.add(new JLabel("Associated Length: "+m.getExponentialFactorisedX()));
+            this.add(new JLabel("\u2205 Reads count: "+m.getExponentialFactorisedY()));
+            
         }
     }
     

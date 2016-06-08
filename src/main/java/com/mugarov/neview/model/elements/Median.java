@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.model.elements;
+package com.mugarov.neview.model.elements;
+
+import com.mugarov.neview.model.MathHelp;
 
 /**
  *
@@ -74,9 +76,6 @@ public class Median {
         return (Math.abs(x-this.start.getX())*this.gradient)+this.start.getY();
     }
     
-    private double log(int base, double value){
-        return Math.log(value)/Math.log(base);
-    }
     
     
     public Coordinates getStart(){
@@ -123,7 +122,7 @@ public class Median {
     }
     
     public double getFacorisedX(){
-        return (this.getXOn(this.factorisedY)*this.factor);
+        return (this.averageX*this.factor*this.antiGradient);
     }
     
     
@@ -132,11 +131,11 @@ public class Median {
     }
     
     public double getExponentialFactorisedX(){
-        return Math.pow(Dot.BASE,this.getFacorisedX());
+        return (MathHelp.getExponential(this.averageX)*this.factor);
     }
     
     public double getExponentialFactorisedY(){
-        return Math.pow(Dot.BASE, this.getFactorisedY());
+        return (MathHelp.getExponential(this.averageY)*this.factor);
     }
     
     public Coordinates getStartCoordinates(){

@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.model.elements;
+package com.mugarov.neview.model.elements;
+
+import com.mugarov.neview.model.MathHelp;
 
 /**
  *
@@ -79,11 +81,11 @@ public class Coordinates implements Comparable{
     }
     
     private double getExp(double logVal){
-        return Math.pow(Dot.BASE, logVal);
+        return MathHelp.getExponential(logVal);
     }
     
     private double getLog(double realVal){
-        return Math.log(realVal)/Math.log(Dot.BASE);
+        return MathHelp.getLogarithmic(realVal);
     }
 
     @Override

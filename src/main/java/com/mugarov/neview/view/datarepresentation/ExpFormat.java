@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.view.datarepresentation;
+package com.mugarov.neview.view.datarepresentation;
 
-import com.mycompany.neview.model.elements.Dot;
+import com.mugarov.neview.model.MathHelp;
+import com.mugarov.neview.model.elements.Dot;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -33,7 +34,7 @@ public class ExpFormat extends NumberFormat {
 
     @Override
     public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos) {
-        double exo = Math.pow(Dot.BASE, number);
+        double exo = MathHelp.getExponential(number);
         String write = Double.toString(exo);
         if(this.useInt){
             if(exo ==Math.floor(exo)){

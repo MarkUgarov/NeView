@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.control;
+package com.mugarov.neview.control;
 
-import com.mycompany.neview.model.FileInParser;
-import com.mycompany.neview.view.MainFrame;
+import com.mugarov.neview.model.FileInParser;
+import com.mugarov.neview.view.MainFrame;
 
 /**
  *

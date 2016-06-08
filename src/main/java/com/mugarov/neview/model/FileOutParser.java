@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.model;
+package com.mugarov.neview.model;
 
-import com.mycompany.neview.model.elements.DotBag;
-import com.mycompany.neview.model.elements.Median;
-import com.mycompany.neview.view.ListPanel;
+import com.mugarov.neview.model.elements.DotBag;
+import com.mugarov.neview.model.elements.Median;
+import com.mugarov.neview.view.ListPanel;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -30,7 +30,7 @@ public class FileOutParser {
     private ArrayList<String[]> dotBagData;
     
     public FileOutParser(){
-        
+        this.valuesInLog = false;
     }
     
     public void write(File exportFile){
@@ -113,11 +113,11 @@ public class FileOutParser {
         String scaffold;
         String median;
         for(int i =0 ; i<model.getRowCount(); i++){
-            name = (String) model.getValueAt(i, ListPanel.POSITION_NAME);
-            length = (String) model.getValueAt(i, ListPanel.POSITION_LENGTH);
-            reads = (String) model.getValueAt(i,ListPanel.POSITION_READS);
-            scaffold = (String) model.getValueAt(i, ListPanel.POSITION_SCAFFOLD);
-            median = (String) model.getValueAt(i, ListPanel.POSITION_MEDIAN);
+            name = ""+model.getValueAt(i, ListPanel.POSITION_NAME);
+            length = ""+model.getValueAt(i, ListPanel.POSITION_LENGTH);
+            reads = ""+model.getValueAt(i,ListPanel.POSITION_READS);
+            scaffold = ""+model.getValueAt(i, ListPanel.POSITION_SCAFFOLD);
+            median = ""+model.getValueAt(i, ListPanel.POSITION_MEDIAN);
             entries[i]=this.getDotToStrong(name, length, reads, scaffold, median);
         }
         this.dotBagData.add(entries);
@@ -155,10 +155,10 @@ public class FileOutParser {
     
     private String getMedianToString(Median median){
         if(this.valuesInLog){
-            return median.getName()+": Associated Length "+median.getFacorisedX()+", Reads "+median.getFactorisedY();
+            return median.getName()+": associated Length "+median.getFacorisedX()+", average No. of reads reads "+median.getFactorisedY();
         }
         else{
-            return median.getName()+": Associated Length "+median.getExponentialFactorisedX()+", Reads "+median.getExponentialFactorisedY();
+            return median.getName()+": associated Length "+median.getExponentialFactorisedX()+", average No. of reads reads "+median.getExponentialFactorisedY();
         }
 
     }

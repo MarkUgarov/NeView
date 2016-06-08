@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.view;
+package com.mugarov.neview.view;
 
-import com.mycompany.neview.model.elements.Dot;
-import com.mycompany.neview.model.elements.DotBag;
-import com.mycompany.neview.model.elements.Median;
+import com.mugarov.neview.model.elements.Dot;
+import com.mugarov.neview.model.elements.DotBag;
+import com.mugarov.neview.model.elements.Median;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

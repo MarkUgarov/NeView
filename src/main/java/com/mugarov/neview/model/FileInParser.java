@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.model;
+package com.mugarov.neview.model;
 
-import com.mycompany.neview.model.elements.Dot;
-import com.mycompany.neview.model.elements.DotBag;
-import com.mycompany.neview.model.elements.Median;
-import com.mycompany.neview.model.elements.Scaffold;
+import com.mugarov.neview.model.elements.Dot;
+import com.mugarov.neview.model.elements.DotBag;
+import com.mugarov.neview.model.elements.Median;
+import com.mugarov.neview.model.elements.Scaffold;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -279,8 +279,8 @@ public class FileInParser {
     }
     
     private void eliminateDwarfs(){
-        if(Math.pow(Dot.BASE,this.maxLogLength)<this.minRepresentativeLength){
-            System.out.println("Maximum size is < "+this.minRepresentativeLength+". Drawing all dots.");
+        if(MathHelp.getExponential(this.maxLogLength)<this.minRepresentativeLength){
+            System.out.println("Maximum size is < "+this.minRepresentativeLength+". Using all dots to create medians.");
             this.statisticRelevantDots = new ArrayList<Dot>(this.baglessDots);
             return;
         }
@@ -349,7 +349,7 @@ public class FileInParser {
         int factor = 1;
         boolean end = false;
         int meridianLines =0;
-        while(!end && meridianLines<this.maxMeridianLines){
+        while(!end && meridianLines<this.maxMeridianLines && this.dotNumber != 0){
             line = new Median(logAverageLength, logAverageCoverage, this.maxLogLength, this.maxLogReads, factor+"x", factor, this.getLinearRegressionFactor());
             if(line.isOutOfBounds(this.maxLogLength, this.maxLogReads)){
                 end = true;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.view;
+package com.mugarov.neview.view;
 
-import com.mycompany.neview.control.ExportControl;
+import com.mugarov.neview.control.ExportControl;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;

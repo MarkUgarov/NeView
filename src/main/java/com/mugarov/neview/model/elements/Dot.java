@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.model.elements;
+package com.mugarov.neview.model.elements;
 
 import org.jfree.data.xy.XYDataItem;
 
@@ -36,10 +36,6 @@ public class Dot{
      */
     public Dot(double x, double y, String name){
         this(new Coordinates(x,y), name);
-    }
-    
-    private double log(int base, double value){
-        return Math.log(value)/Math.log(base);
     }
     
     public double getX(){

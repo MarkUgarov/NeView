@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.control;
+package com.mugarov.neview.control;
 
-import com.mycompany.neview.model.FileInParser;
-import com.mycompany.neview.model.FileOutParser;
-import com.mycompany.neview.model.elements.DotBag;
-import com.mycompany.neview.view.ExportPanel;
-import com.mycompany.neview.view.MainFrame;
+import com.mugarov.neview.model.FileInParser;
+import com.mugarov.neview.model.FileOutParser;
+import com.mugarov.neview.model.elements.DotBag;
+import com.mugarov.neview.view.ExportPanel;
+import com.mugarov.neview.view.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -94,11 +94,11 @@ public class ExportControl implements ActionListener, ItemListener{
         JCheckBox box = (JCheckBox) e.getSource();
         if(box.getActionCommand().equals(ExportControl.CHECKBOX_SHOW_MEDIAN_COMMAND)){
             if(e.getStateChange() == ItemEvent.SELECTED){
-                System.out.println("Selected "+box.getActionCommand());
+//                System.out.println("Selected "+box.getActionCommand());
                 this.writeMedians = true;
             }
             else if(e.getStateChange() == ItemEvent.DESELECTED){
-                System.out.println("Unselected "+box.getActionCommand());
+//                System.out.println("Unselected "+box.getActionCommand());
                 this.writeMedians = false;
             }
         }

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.neview.view.datarepresentation;
+package com.mugarov.neview.view.datarepresentation;
 
-import com.mycompany.neview.model.elements.Coordinates;
+import com.mugarov.neview.model.elements.Coordinates;
 import java.util.ArrayList;
 import org.jfree.data.xy.XYSeries;
 
