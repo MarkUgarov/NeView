@@ -5,7 +5,9 @@
  */
 package com.mycompany.neview;
 
-import static org.junit.Assert.*;
+import com.mugarov.neview.NewView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,10 +25,14 @@ public class NewViewTest {
     @org.junit.Test
     public void testMain() {
         System.out.println("main");
-        String[] args = new String[]{"/homes/mugarov/Dokumente/ExampleInputNeView/454AllContigs.fna"};
-//        NewView.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+        String dir = "/vol/ampipe/data/mugarov/output/Miseq___Data/Newbler_M240_TGACCA_L001/";
+        String[] args = new String[]{"Test", dir+"454AllContigs.fna", dir+"454Scaffolds.txt"};
+        NewView.main(args);
+        try {
+            Thread.sleep(100000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(NewViewTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

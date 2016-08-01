@@ -66,13 +66,26 @@ public class Median {
     }
     
     
-    
-    private double getXOn(double y){
-        return (Math.abs(y-this.start.getY()) /this.gradient)+this.start.getX();
+    /** 
+     * Calculating the x- Position on the line on the same high as the dot.
+     * @param x X-Coordinate of the dot
+     * @param y Y-Coordinate of the dot
+     * @return a positive or negative value
+     */
+    private double getXOn(double x, double y){
+        double yPos = Math.abs(x-this.start.getX())*gradient+this.start.getY();
+        double deltaOfY = Math.abs(yPos-y); // not a delta as in getDeltaY
+        return x-(deltaOfY/gradient);
     }
     
-    private double getYOn(double x){
-        return (Math.abs(x-this.start.getX())*this.gradient)+this.start.getY();
+    /** 
+     * Calculating the y- Position on the line on the same high as the dot.
+     * @param x X-Coordinate of the dot
+     * @param y Y-Coordinate of the dot
+     * @return 
+     */
+    private double getYOn(double x, double y){
+        return (Math.abs(x-this.start.getX())*gradient)+this.start.getY();
     }
     
     
@@ -104,16 +117,24 @@ public class Median {
     public boolean isUnderLine(Dot dot){
         double deltaX = this.getDeltaX(dot);
         double deltaY = this.getDeltaY(dot);
+        if(dot.getX() == 324 && dot.getY() == 138){
+            System.out.println("The start of "+this.getName()+" is ("+ this.start.getX()+","+this.start.getY()+") with gradient "+ this.gradient);
+            System.out.println("Dot is on ("+dot.getLogX()+","+dot.getLogY()+")");
+            System.out.println("Line pos is ("+this.getXOn(dot.getLogX(), dot.getLogY())+","+this.getYOn(dot.getLogX(), dot.getLogY())+")");
+            
+            System.out.println("DeltaX: "+deltaX+", DeltaY: "+deltaY);
+        }
         return (deltaX >= 0 && deltaY>=0);
+        // 122 157
     }
     
     private double getDeltaX(Dot dot){
-        return dot.getLogX()-this.getXOn(dot.getLogY());
+        return dot.getLogX()-this.getXOn(dot.getLogX(), dot.getLogY());
        
     }
     
     private double getDeltaY(Dot dot){
-        return this.getYOn(dot.getLogX()-dot.getLogY());
+        return this.getYOn(dot.getLogX(), dot.getLogY())-dot.getLogY();
     }
     
     public double getFactor(){
