@@ -48,7 +48,6 @@ public class Median {
         this.factorisedY = factor*averageY;
         this.gradient = gradient;
         this.antiGradient = 1/gradient;
-;
         
         double xA = averageX;
         double yA = factorisedY;
@@ -131,7 +130,7 @@ public class Median {
     }
     
     public double getExponentialFactorisedX(){
-        return (MathHelp.getExponential(this.averageX)*this.factor);
+        return (MathHelp.getExponential(this.averageX)*this.factor*this.antiGradient);
     }
     
     public double getExponentialFactorisedY(){
