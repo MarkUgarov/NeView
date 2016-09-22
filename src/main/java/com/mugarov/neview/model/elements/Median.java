@@ -117,13 +117,6 @@ public class Median {
     public boolean isUnderLine(Dot dot){
         double deltaX = this.getDeltaX(dot);
         double deltaY = this.getDeltaY(dot);
-        if(dot.getX() == 324 && dot.getY() == 138){
-            System.out.println("The start of "+this.getName()+" is ("+ this.start.getX()+","+this.start.getY()+") with gradient "+ this.gradient);
-            System.out.println("Dot is on ("+dot.getLogX()+","+dot.getLogY()+")");
-            System.out.println("Line pos is ("+this.getXOn(dot.getLogX(), dot.getLogY())+","+this.getYOn(dot.getLogX(), dot.getLogY())+")");
-            
-            System.out.println("DeltaX: "+deltaX+", DeltaY: "+deltaY);
-        }
         return (deltaX >= 0 && deltaY>=0);
         // 122 157
     }
